@@ -1,0 +1,22 @@
+{
+  "name": "tentang-berita",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "cms": "node cms/server.js"
+  },
+  "dependencies": {
+    "astro": "^5.8.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "tailwindcss": "^3.4.17",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@astrojs/vercel": "^8.1.4"
+  }
+}

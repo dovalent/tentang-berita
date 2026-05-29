@@ -1,0 +1,76 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const categoryMap: Record<string, string> = {
+  nasional: 'Nasional',
+  lifehacks: 'Lifehacks & Solusi Teknis',
+  opini: 'Opini',
+};
+
+export async function getStaticPaths() {
+  return [
+    { params: { category: 'nasional' } },
+    { params: { category: 'lifehacks' } },
+    { params: { category: 'opini' } },
+  ];
+}
+
+const { category } = Astro.params;
+const displayName = categoryMap[category!] || category;
+
+const allNews = await getCollection('news');
+const filteredNews = allNews
+  .filter((a) => a.data.category.toLowerCase() === (category === 'lifehacks' ? 'lifehacks' : category))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<MainLayout title={`${displayName} — Berita Terkini`} description={`Kumpulan berita terkini kategori ${displayName} dari TENTANG Berita.`}>
+
+  <section class="max-w-container mx-auto px-4 sm:px-6 pt-8 pb-16">
+    <!-- Category Header -->
+    <div class="mb-10">
+      <nav class="text-sm text-slate-400 mb-4" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
+        <span class="mx-2">/</span>
+        <span class="text-brand-900 font-medium">{displayName}</span>
+      </nav>
+      <div class="flex items-center gap-4">
+        <h1 class="text-headline-xl text-brand-900" id="category-heading">{displayName}</h1>
+        <div class="flex-1 h-px bg-gradient-to-r from-surface-border to-transparent"></div>
+      </div>
+      <p class="text-body text-slate-500 mt-2">Kumpulan berita terkini kategori {displayName}.</p>
+    </div>
+
+    <!-- Articles Grid -->
+    {filteredNews.length > 0 ? (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredNews.map((article) => (
+          <ArticleCard
+            title={article.data.title}
+            permalink={article.data.permalink}
+            date={article.data.date}
+            author={article.data.author}
+            category={article.data.category}
+            image_url={article.data.image_url}
+            excerpt={article.data.excerpt}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20">
+        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+          </svg>
+        </div>
+        <p class="text-slate-400 text-lg">Belum ada artikel dalam kategori ini.</p>
+        <a href="/" class="inline-block mt-4 text-brand-500 text-sm font-medium hover:underline">
+          ← Kembali ke beranda
+        </a>
+      </div>
+    )}
+  </section>
+
+</MainLayout>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tentang-berita.vercel.app/sitemap.xml

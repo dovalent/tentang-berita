@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  permalink: string;
+  date: string;
+  author: string;
+  category: string;
+  image_url: string;
+  excerpt: string;
+}
+
+const { title, permalink, date, author, category, image_url, excerpt } = Astro.props;
+
+const categoryClass = {
+  nasional: 'category-badge--nasional',
+  lifehacks: 'category-badge--lifehacks',
+  opini: 'category-badge--opini',
+}[category.toLowerCase()] || 'category-badge--default';
+
+const formattedDate = new Date(date).toLocaleDateString('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<article class="group cursor-pointer" id="headline-hero">
+  <a href={`/berita/${permalink}`} class="block relative overflow-hidden rounded-xl" style="min-height: 480px;" aria-label={`Baca headline: ${title}`}>
+    <img
+      src={image_url}
+      alt={title}
+      class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+      width="1200"
+      height="630"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 z-20 text-white">
+      <span class={`category-badge ${categoryClass} mb-3`}>{category}</span>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-3 text-balance max-w-3xl">
+        {title}
+      </h2>
+      <p class="text-sm sm:text-base text-slate-200 mb-4 max-w-2xl line-clamp-2">
+        {excerpt}
+      </p>
+      <div class="flex items-center gap-3 text-sm text-slate-300">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
+            <span class="text-xs font-bold text-white">{author.charAt(0)}</span>
+          </div>
+          <span class="font-medium text-white">{author}</span>
+        </div>
+        <span class="text-slate-400">&middot;</span>
+        <time datetime={date} class="text-slate-300">{formattedDate}</time>
+      </div>
+    </div>
+  </a>
+</article>
+

@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  permalink: string;
+  date: string;
+  author: string;
+  category: string;
+  image_url: string;
+  excerpt: string;
+}
+
+const { title, permalink, date, author, category, image_url, excerpt } = Astro.props;
+
+const categoryClass = {
+  nasional: 'category-badge--nasional',
+  lifehacks: 'category-badge--lifehacks',
+  opini: 'category-badge--opini',
+}[category.toLowerCase()] || 'category-badge--default';
+
+const formattedDate = new Date(date).toLocaleDateString('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<article class="article-card group">
+  <a href={`/berita/${permalink}`} class="block" aria-label={`Baca artikel: ${title}`}>
+    <div class="relative overflow-hidden">
+      <img
+        src={image_url}
+        alt={title}
+        class="article-card__image group-hover:scale-105 transition-transform duration-500 ease-out"
+        width="640"
+        height="360"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="absolute top-3 left-3">
+        <span class={`category-badge ${categoryClass}`}>{category}</span>
+      </div>
+    </div>
+    <div class="article-card__body">
+      <h3 class="article-card__title group-hover:text-brand-500 transition-colors duration-200">
+        {title}
+      </h3>
+      <p class="article-card__excerpt">{excerpt}</p>
+      <div class="article-card__meta">
+        <span class="font-medium text-slate-500">{author}</span>
+        <span class="text-slate-300">&middot;</span>
+        <time datetime={date}>{formattedDate}</time>
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,100 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import HeadlineCard from '../components/HeadlineCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allNews = await getCollection('news');
+const sortedNews = allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const headline = sortedNews[0];
+const latestArticles = sortedNews.slice(1);
+---
+
+<MainLayout title="Berita Terkini Hari Ini" description="TENTANG Berita — Portal berita terkini yang menyajikan informasi nasional, lifehack teknis, dan opini secara objektif dan berbasis data.">
+
+  <!-- Breaking News Ticker -->
+  <section id="breaking-ticker" class="bg-brand-900 overflow-hidden">
+    <div class="max-w-container mx-auto px-4 sm:px-6 flex items-center h-9">
+      <span class="shrink-0 bg-accent text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-sm mr-4">
+        Terkini
+      </span>
+      <div class="overflow-hidden relative flex-1">
+        <div class="ticker-bar whitespace-nowrap py-2">
+          <span class="inline-block mr-16">📌 APBN 2026 ditetapkan Rp3.600 triliun — Belanja infrastruktur naik 4,8%</span>
+          <span class="inline-block mr-16">📌 Indeks literasi digital Indonesia Timur masih di bawah rata-rata nasional</span>
+          <span class="inline-block mr-16">📌 Tutorial: 5 langkah mengatasi Permission Denied di Linux</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Headline Hero -->
+  <section id="headline-section" class="max-w-container mx-auto px-4 sm:px-6 mt-6">
+    <HeadlineCard
+      title={headline.data.title}
+      permalink={headline.data.permalink}
+      date={headline.data.date}
+      author={headline.data.author}
+      category={headline.data.category}
+      image_url={headline.data.image_url}
+      excerpt={headline.data.excerpt}
+    />
+  </section>
+
+  <!-- Section Divider -->
+  <section class="max-w-container mx-auto px-4 sm:px-6 mt-12 mb-8">
+    <div class="flex items-center gap-4">
+      <h2 class="text-headline-md text-brand-900 whitespace-nowrap" id="berita-terbaru-heading">Berita Terbaru</h2>
+      <div class="flex-1 h-px bg-gradient-to-r from-surface-border to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- Article Grid -->
+  <section id="latest-articles" class="max-w-container mx-auto px-4 sm:px-6 mb-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {latestArticles.map((article) => (
+        <ArticleCard
+          title={article.data.title}
+          permalink={article.data.permalink}
+          date={article.data.date}
+          author={article.data.author}
+          category={article.data.category}
+          image_url={article.data.image_url}
+          excerpt={article.data.excerpt}
+        />
+      ))}
+    </div>
+
+    {latestArticles.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-slate-400 text-lg">Belum ada artikel lain saat ini.</p>
+      </div>
+    )}
+  </section>
+
+  <!-- Newsletter CTA Section -->
+  <section id="newsletter-cta" class="bg-brand-900 py-16">
+    <div class="max-w-container mx-auto px-4 sm:px-6 text-center">
+      <div class="max-w-xl mx-auto">
+        <h2 class="text-headline-lg text-white mb-3">Dapatkan Berita Terkini</h2>
+        <p class="text-slate-400 mb-6">Berlangganan newsletter kami untuk mendapatkan ringkasan berita harian langsung ke inbox Anda.</p>
+        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input
+            type="email"
+            placeholder="Masukkan email Anda"
+            class="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+            id="newsletter-email"
+          />
+          <button
+            class="px-6 py-3 bg-brand-500 hover:bg-brand-400 text-white text-sm font-semibold rounded-lg transition-colors duration-200 shrink-0"
+            id="newsletter-submit"
+          >
+            Berlangganan
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>

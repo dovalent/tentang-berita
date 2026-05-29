@@ -1,0 +1,108 @@
+---
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Nasional', href: '/kategori/nasional' },
+  { label: 'Lifehacks & Solusi Teknis', href: '/kategori/lifehacks' },
+  { label: 'Opini', href: '/kategori/opini' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-surface-border shadow-nav">
+  <!-- Top accent line -->
+  <div class="h-0.5 bg-gradient-to-r from-brand-500 via-accent to-brand-700"></div>
+
+  <div class="max-w-container mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" id="site-logo" class="flex items-center gap-2 group shrink-0">
+        <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center group-hover:bg-brand-600 transition-colors duration-200">
+          <span class="text-white font-black text-sm leading-none">TB</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-extrabold text-brand-900 tracking-tight leading-none">TENTANG</span>
+          <span class="text-[10px] font-semibold text-accent tracking-[0.2em] uppercase leading-none">Berita</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav id="desktop-nav" class="hidden lg:flex items-center gap-6" aria-label="Navigasi utama">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`nav-link ${currentPath === item.href ? 'nav-link--active' : ''}`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Search + Mobile Menu -->
+      <div class="flex items-center gap-3">
+        <!-- Search placeholder -->
+        <div id="search-bar" class="hidden sm:flex items-center gap-2 bg-slate-100 rounded-full px-4 py-2 w-48 lg:w-56 cursor-pointer hover:bg-slate-200 transition-colors">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <span class="text-sm text-slate-400">Cari berita...</span>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-toggle"
+          class="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg id="menu-icon-open" class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="menu-icon-close" class="w-6 h-6 text-slate-700 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-surface-border">
+    <div class="max-w-container mx-auto px-4 py-4 space-y-1">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+            currentPath === item.href
+              ? 'bg-brand-50 text-brand-500'
+              : 'text-slate-700 hover:bg-slate-50 hover:text-brand-500'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+      <!-- Mobile search -->
+      <div class="flex items-center gap-2 bg-slate-100 rounded-lg px-4 py-3 mt-3 sm:hidden">
+        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <span class="text-sm text-slate-400">Cari berita...</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>

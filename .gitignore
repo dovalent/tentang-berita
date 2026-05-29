@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Output
+dist/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Astro
+.astro/
