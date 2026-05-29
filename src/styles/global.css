@@ -37,12 +37,28 @@
     @apply inline-block px-2.5 py-0.5 text-overline uppercase tracking-wider rounded-sm transition-colors duration-200;
   }
 
+  .category-badge--news {
+    @apply bg-brand-500 text-white;
+  }
+
   .category-badge--nasional {
     @apply bg-brand-500 text-white;
   }
 
+  .category-badge--film {
+    @apply bg-purple-600 text-white;
+  }
+
+  .category-badge--game {
+    @apply bg-indigo-600 text-white;
+  }
+
   .category-badge--lifehacks {
     @apply bg-emerald-600 text-white;
+  }
+
+  .category-badge--banyuwangi {
+    @apply bg-teal-600 text-white;
   }
 
   .category-badge--opini {

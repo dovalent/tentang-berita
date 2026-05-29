@@ -43,8 +43,12 @@ input,textarea,select{font-family:inherit;font-size:.875rem}
 .article-info h3{font-size:.875rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .article-meta{font-size:.75rem;color:var(--text-muted);margin-top:2px;display:flex;gap:.75rem;flex-wrap:wrap}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.badge-news{background:#dbeafe;color:#1d4ed8}
 .badge-nasional{background:#dbeafe;color:#1d4ed8}
+.badge-film{background:#f3e8ff;color:#7c3aed}
+.badge-game{background:#e0e7ff;color:#4338ca}
 .badge-lifehacks{background:#d1fae5;color:#059669}
+.badge-banyuwangi{background:#ccfbf1;color:#0d9488}
 .badge-opini{background:#fef3c7;color:#d97706}
 .article-actions{display:flex;gap:.4rem;flex-shrink:0}
 .empty-state{text-align:center;padding:3rem;color:var(--text-muted)}
@@ -149,8 +153,11 @@ input,textarea,select{font-family:inherit;font-size:.875rem}
         <div class="form-group">
           <label class="form-label">Kategori *</label>
           <select class="form-select" id="fCategory">
-            <option value="Nasional">Nasional</option>
+            <option value="News">News</option>
+            <option value="Film & Movie">Film & Movie</option>
+            <option value="Game">Game</option>
             <option value="Lifehacks">Lifehacks & Solusi Teknis</option>
+            <option value="Banyuwangi">Banyuwangi</option>
             <option value="Opini">Opini</option>
           </select>
         </div>
@@ -223,7 +230,7 @@ function showEditor(article = null) {
     document.getElementById('fPermalink').value = article.permalink || '';
     document.getElementById('fDate').value = article.date || '';
     document.getElementById('fAuthor').value = article.author || '';
-    document.getElementById('fCategory').value = article.category || 'Nasional';
+    document.getElementById('fCategory').value = article.category || 'News';
     document.getElementById('fTags').value = Array.isArray(article.tags) ? article.tags.join(', ') : (article.tags || '');
     document.getElementById('fExcerpt').value = article.excerpt || '';
     document.getElementById('fImageUrl').value = article.image_url || '';
@@ -235,7 +242,7 @@ function showEditor(article = null) {
     editingPermalink = null;
     ['fTitle','fPermalink','fAuthor','fTags','fExcerpt','fImageUrl','fImageCaption','fBody'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
-    document.getElementById('fCategory').value = 'Nasional';
+    document.getElementById('fCategory').value = 'News';
     document.getElementById('btnSave').textContent = '💾 Simpan Artikel';
     document.getElementById('uploadLabel').innerHTML = '📷 Klik untuk upload gambar<br><small style="color:var(--text-muted)">PNG, JPG, WebP</small>';
     document.getElementById('uploadZone').classList.remove('has-image');
@@ -265,7 +272,7 @@ function renderArticles(articles) {
 
   el.innerHTML = articles.map(a => {
     const cat = (a.category || '').toLowerCase();
-    const badgeClass = cat === 'nasional' ? 'badge-nasional' : cat === 'lifehacks' ? 'badge-lifehacks' : cat === 'opini' ? 'badge-opini' : '';
+    const badgeClass = {news:'badge-news',nasional:'badge-nasional',film:'badge-film','film & movie':'badge-film',game:'badge-game',lifehacks:'badge-lifehacks',banyuwangi:'badge-banyuwangi',opini:'badge-opini'}[cat] || '';
     const dateStr = new Date(a.date).toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'});
     return `<div class="article-row">
       <img src="${a.image_url || ''}" class="article-thumb" onerror="this.style.display='none'">

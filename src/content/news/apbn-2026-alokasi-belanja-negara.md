@@ -3,7 +3,7 @@ title: "Pemerintah Tetapkan Alokasi APBN 2026 Sebesar Rp3.600 Triliun untuk Bela
 permalink: "apbn-2026-alokasi-belanja-negara"
 date: "2026-05-28"
 author: "Ahmad Fauzan"
-category: "Nasional"
+category: "News"
 tags: ["APBN", "ekonomi", "fiskal", "pemerintah", "anggaran"]
 image_url: "/images/nasional-apbn-2026.png"
 image_caption: "Gedung DPR RI, tempat pembahasan APBN berlangsung."

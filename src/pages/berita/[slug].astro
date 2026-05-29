@@ -28,8 +28,13 @@ const formattedDate = new Date(entry.data.date).toLocaleDateString('id-ID', {
 });
 
 const categoryClass = {
+  news: 'category-badge--news',
   nasional: 'category-badge--nasional',
+  film: 'category-badge--film',
+  'film & movie': 'category-badge--film',
+  game: 'category-badge--game',
   lifehacks: 'category-badge--lifehacks',
+  banyuwangi: 'category-badge--banyuwangi',
   opini: 'category-badge--opini',
 }[entry.data.category.toLowerCase()] || 'category-badge--default';
 

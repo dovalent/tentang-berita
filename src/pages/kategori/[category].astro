@@ -3,26 +3,33 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 
-const categoryMap: Record<string, string> = {
-  nasional: 'Nasional',
-  lifehacks: 'Lifehacks & Solusi Teknis',
-  opini: 'Opini',
+const categoryMap: Record<string, { display: string; match: string[] }> = {
+  news: { display: 'News', match: ['news', 'nasional'] },
+  film: { display: 'Film & Movie', match: ['film', 'film & movie', 'movie'] },
+  game: { display: 'Game', match: ['game', 'gaming'] },
+  lifehacks: { display: 'Lifehacks & Solusi Teknis', match: ['lifehacks', 'lifehack', 'teknis'] },
+  banyuwangi: { display: 'Banyuwangi', match: ['banyuwangi'] },
+  opini: { display: 'Opini', match: ['opini', 'editorial'] },
 };
 
 export async function getStaticPaths() {
   return [
-    { params: { category: 'nasional' } },
+    { params: { category: 'news' } },
+    { params: { category: 'film' } },
+    { params: { category: 'game' } },
     { params: { category: 'lifehacks' } },
+    { params: { category: 'banyuwangi' } },
     { params: { category: 'opini' } },
   ];
 }
 
 const { category } = Astro.params;
-const displayName = categoryMap[category!] || category;
+const catInfo = categoryMap[category!] || { display: category, match: [category!] };
+const displayName = catInfo.display;
 
 const allNews = await getCollection('news');
 const filteredNews = allNews
-  .filter((a) => a.data.category.toLowerCase() === (category === 'lifehacks' ? 'lifehacks' : category))
+  .filter((a) => catInfo.match.includes(a.data.category.toLowerCase()))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 

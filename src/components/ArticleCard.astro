@@ -12,8 +12,13 @@ interface Props {
 const { title, permalink, date, author, category, image_url, excerpt } = Astro.props;
 
 const categoryClass = {
+  news: 'category-badge--news',
   nasional: 'category-badge--nasional',
+  film: 'category-badge--film',
+  'film & movie': 'category-badge--film',
+  game: 'category-badge--game',
   lifehacks: 'category-badge--lifehacks',
+  banyuwangi: 'category-badge--banyuwangi',
   opini: 'category-badge--opini',
 }[category.toLowerCase()] || 'category-badge--default';
 
