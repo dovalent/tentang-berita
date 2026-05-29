@@ -7,7 +7,9 @@ export default defineConfig({
   site: 'https://tentang-berita.vercel.app',
   integrations: [tailwind(), sitemap()],
   output: 'static',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
   image: {
     domains: [],
   },
