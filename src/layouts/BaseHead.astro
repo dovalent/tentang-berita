@@ -75,6 +75,25 @@ const ogImage = image.startsWith('http') ? image : new URL(image, siteUrl).href;
     .header-spacer { height: 64px; }
     img { content-visibility: auto; }
   </style>
+
+  <!-- ═══ Google Analytics (GA4) ═══ -->
+  <!-- Ganti G-XXXXXXXXXX dengan Measurement ID kamu -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- ═══ Google Search Console Verification ═══ -->
+  <!-- Ganti KODE_VERIFIKASI dengan kode dari Search Console -->
+  <meta name="google-site-verification" content="KODE_VERIFIKASI" />
+
+  <!-- ═══ Google AdSense ═══ -->
+  <!-- Ganti ca-pub-XXXXXXXXXXXXXXXX dengan Publisher ID kamu -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
 </head>
 <body class="font-sans text-brand-900 bg-surface-light antialiased">
   <div class="header-spacer"></div>
