@@ -102,6 +102,7 @@ input,textarea,select{font-family:inherit;font-size:.875rem}
     <a href="http://localhost:4321" target="_blank" class="btn btn-ghost btn-sm">🔗 Lihat Website</a>
     <button class="btn btn-ghost btn-sm" onclick="showList()">📋 Daftar Artikel</button>
     <button class="btn btn-primary btn-sm" onclick="showEditor()">＋ Tulis Artikel</button>
+    <button class="btn btn-sm" style="background:#059669;color:#fff" onclick="publishToGit()" id="btnPublish">🚀 Publish</button>
   </div>
 </div>
 
@@ -438,6 +439,28 @@ function toast(msg, type = 'success') {
   el.textContent = msg;
   el.className = 'toast toast-' + type + ' show';
   setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── Publish ──
+async function publishToGit() {
+  if (!confirm('Publish semua perubahan ke website online?\n\nWebsite akan update dalam 30-60 detik setelah publish.')) return;
+  const btn = document.getElementById('btnPublish');
+  btn.textContent = '⏳ Publishing...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(API + '/api/publish', { method: 'POST' });
+    const result = await res.json();
+    if (result.error) {
+      toast(result.error, 'error');
+    } else {
+      toast(result.message, 'success');
+    }
+  } catch (e) {
+    toast('Gagal publish: ' + e.message, 'error');
+  } finally {
+    btn.textContent = '🚀 Publish';
+    btn.disabled = false;
+  }
 }
 
 // ── Init ──

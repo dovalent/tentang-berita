@@ -332,6 +332,30 @@ async function handleRequest(req, res) {
       return sendJSON(res, images);
     }
 
+    // ── API: Publish (git push) ──
+    if (method === 'POST' && path === '/api/publish') {
+      const { execSync } = await import('child_process');
+      try {
+        const opts = { cwd: PROJECT_ROOT, encoding: 'utf-8', timeout: 30000 };
+        execSync('git add .', opts);
+        const msg = `Publish: ${new Date().toLocaleString('id-ID')}`;
+        try {
+          execSync(`git commit -m "${msg}"`, opts);
+        } catch (e) {
+          // Nothing to commit
+          if (e.stdout?.includes('nothing to commit')) {
+            return sendJSON(res, { success: true, message: 'Tidak ada perubahan untuk dipublish.' });
+          }
+          throw e;
+        }
+        const pushResult = execSync('git push', { ...opts, timeout: 60000 });
+        return sendJSON(res, { success: true, message: 'Berhasil dipublish! Website akan update dalam 30-60 detik.' });
+      } catch (err) {
+        console.error('Publish error:', err.message);
+        return sendError(res, 'Gagal publish: ' + (err.stderr || err.message), 500);
+      }
+    }
+
     // ── 404 ──
     sendError(res, 'Not found', 404);
 
