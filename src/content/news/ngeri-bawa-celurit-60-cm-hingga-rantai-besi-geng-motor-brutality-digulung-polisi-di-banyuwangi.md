@@ -3,7 +3,7 @@ title: "Ngeri! Bawa Celurit 60 cm hingga Rantai Besi, Geng Motor 'BRUTALITY' Dig
 permalink: "ngeri-bawa-celurit-60-cm-hingga-rantai-besi-geng-motor-brutality-digulung-polisi-di-banyuwangi"
 date: "2026-05-31"
 author: "Dovalent Vandeva Derico Laksana"
-category: "News"
+category: "Banyuwangi"
 tags: ["Banyuwangi", "Jawa-Timur", "Berita-terbaru", "kriminalitas", "Polresta-banyuwangi", "polisi", "geng-motor"]
 image_url: "/images/whatsapp-image-2026-05-31-at-172921.jpeg"
 image_caption: "Ngeri! Bawa Celurit 60 cm hingga Rantai Besi, Geng Motor 'BRUTALITY' Digulung Polisi di Banyuwangi"
